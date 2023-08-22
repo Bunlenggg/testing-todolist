@@ -1,0 +1,12 @@
+.line {
+  text-decoration: line-through;
+}
+
+.li {
+  width: 200px;
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  margin: 12px 0;
+  border: 1px solid black;
+}
