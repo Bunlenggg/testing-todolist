@@ -1,5 +1,5 @@
 import Input from "./components/Input/Input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 const App = () => {
   const handleSubmit = (name) => {
     if (name.trim() === "") return;
@@ -29,13 +29,48 @@ const App = () => {
   ]);
   const newPerson = user.filter((person) => person.isDone === false);
   const filterPerson = user.filter((person) => person.isDone === true);
+
+  // state handle edit
+
+  // for form open
+  const [isOpen, setOpen] = useState(false);
+  // store old title
+  const [oldTitle, setoldTitle] = useState("");
+  // store old id
+  const [id, setId] = useState(null);
+  // new edit input value
+  const editRef = useRef(null);
+
+  const handleEdit = (name, id) => {
+    setOpen(!isOpen);
+    setoldTitle(name);
+    setId(id);
+    console.log(oldTitle, id);
+  };
+
+  const onEdit = (e) => {
+    e.preventDefault();
+    console.log("id", id);
+    if (editRef.current.value == "") {
+      setOpen(!isOpen);
+      return;
+    }
+    console.log(editRef.current.value);
+    setUser(
+      user.map((person) =>
+        person.id === id ? { ...person, name: editRef.current.value } : person
+      )
+    );
+  };
+
+  // ------------------
   return (
     <>
       <Input fnGetName={handleSubmit} />
       <p>List all Person {user.length}</p>
       <ul>
         {user.map((person) => (
-          <div className="li">
+          <div className="li" key={person.id}>
             <li
               className={person.isDone ? "line" : ""}
               onClick={() => handleMark(person.id)}
@@ -43,6 +78,9 @@ const App = () => {
             >
               {person.name}
             </li>{" "}
+            <button onClick={() => handleEdit(person.name, person.id)}>
+              Edit
+            </button>
             <button onClick={() => handleDelete(person.id)}>Delete</button>
           </div>
         ))}
@@ -54,6 +92,7 @@ const App = () => {
             {newPerson.map((person) => (
               <li onClick={() => handleMark(person.id)} key={person.id}>
                 {person.name}
+                <button>Edit</button>
                 <button onClick={() => handleDelete(person.id)}>Delete</button>
               </li>
             ))}
@@ -77,6 +116,20 @@ const App = () => {
             ))}
           </ul>
         </>
+      )}
+
+      {isOpen && (
+        <form className="edit" onSubmit={onEdit}>
+          <hr />
+          <p>
+            Old Name : <span>{oldTitle}</span> Old ID : <span>{id}</span>
+          </p>
+          <input ref={editRef} type="text" />
+          <div>
+            <button type="submit">Edit</button>
+            <button onClick={() => setOpen(!isOpen)}>Cancel</button>
+          </div>
+        </form>
       )}
     </>
   );
