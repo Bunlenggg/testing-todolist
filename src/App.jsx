@@ -5,6 +5,9 @@ import "./App.css";
 
 function App() {
   const [person, setPerson] = useState([]);
+  const [editId, setEditId] = useState(null);
+  const editRef = useRef();
+
   const inputRef = useRef();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,16 +20,51 @@ function App() {
     inputRef.current.value = "";
   };
 
+  const handleEdit = (id) => {
+    console.log(id);
+  };
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    setPerson(
+      person.map((each) =>
+        each.id === editId ? { ...each, name: editRef.current.value } : each
+      )
+    );
+
+    editRef.current.value = "";
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input ref={inputRef} type="text" />
-      <button>Submit</button>
-      <ul style={{ color: "red", listStyle: "none", textAlign: "ronaldo" }}>
-        {person.map((e) => {
-          return <li>{e.name}</li>;
-        })}
-      </ul>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <input ref={inputRef} type="text" />
+        <button>Submit</button>
+        <ul>
+          {person.map((e) => {
+            return (
+              <li key={e.id}>
+                {e.name}
+                <button
+                  onClick={() => {
+                    handleEdit(e.id);
+                    setEditId(e.id);
+                    editRef.current.value = e.name;
+                  }}
+                >
+                  Edit
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      </form>
+      <hr />
+      <form onSubmit={handleEditSubmit}>
+        <input ref={editRef} type="text" />
+        <button type="submit">Edit Now</button>
+      </form>
+    </>
   );
 }
 
