@@ -8,7 +8,7 @@ const App = () => {
   const [isOpen, setOpen] = useState(false);
   const [editId, setEditId] = useState(0);
   const [oldname, setOldName] = useState("");
-  const [todos, setTodos] = useState([{ id: 1, name: "John", isCheck: false }]);
+  const [todos, setTodos] = useState([]);
   const handleSubmit = (name) => {
     setTodos([...todos, { id: Math.random(), name, isCheck: false }]);
   };
