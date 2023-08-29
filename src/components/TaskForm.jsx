@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 
 const TaskForm = ({ handleSubmit }) => {
-  //   const [task, setTask] = useState();
   const inputRef = useRef(null);
   const handleSub = (e) => {
     e.preventDefault();

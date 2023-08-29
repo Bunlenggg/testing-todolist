@@ -1,3 +1,21 @@
+/* Font Awesome */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css");
 
+/* Google font: Brocolage Grotesque */
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,300;10..48,500&display=swap");
+
+
+:root {
+    --black-bg: #17171f;
+    --gray-secondary: #aaa;
+    --light-gray-bg: #3a3636;
+    --black-task-list: #20212d;
+    --primary-color: #61dafb;
+    --hover-delete: #fe0000;
+    --normal-text: #fff;
+    --font-family: 'Brocolage Grotesque', sans-serif;
+    --big-title: 3.2rem;
+    --small-text: 1.8rem;
+    --border-input: 1.5rem;
+    --width: 40rem;
+}
