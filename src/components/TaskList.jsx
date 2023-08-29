@@ -19,7 +19,7 @@ const TaskList = ({
       <div className="check-list">
         <ul className="list-items">
           {todo.map((t) => (
-            <li key={t.id} className={t.isCheck ? "grid line" : "grid"}>
+            <li key={t.id} className={t.isCheck ? "grid line p" : "grid"}>
               {!t.isCheck && (
                 <CheckBox
                   id={t.id}

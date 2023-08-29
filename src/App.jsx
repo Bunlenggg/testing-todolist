@@ -1,14 +1,18 @@
-import TaskForm from "./components/TaskForm";
-import TaskList from "./components/TaskList";
 import "./App.css";
 import { useState } from "react";
-import FormEdit from "./components/FormEdit";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
+import Search from "./components/Search";
 
 const App = () => {
   const [isOpen, setOpen] = useState(false);
   const [editId, setEditId] = useState(0);
   const [oldname, setOldName] = useState("");
   const [todos, setTodos] = useState([]);
+  const [search, setSearch] = useState("");
+  const filtered = search
+    ? todos.filter((t) => t.name.toLowerCase().includes(search.toLowerCase()))
+    : todos;
   const handleSubmit = (name) => {
     setTodos([...todos, { id: Math.random(), name, isCheck: false }]);
   };
@@ -36,16 +40,23 @@ const App = () => {
     setOldName(name);
   };
 
+  const handleSearch = (value) => {
+    console.log(value);
+    setSearch(value);
+  };
+
   return (
     <>
       <div className="task-div">
         <h1>Don't Do It</h1>
+
         <TaskForm handleSubmit={handleSubmit} />
+        <Search setSearch={handleSearch} />
         <TaskList
           id={editId}
           setOpen={() => setOpen(!isOpen)}
           isOpen={isOpen}
-          todo={todos}
+          todo={filtered}
           onClick={onClick}
           handleDelete={handleDelete}
           setEditId={edit}
